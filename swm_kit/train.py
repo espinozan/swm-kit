@@ -6,6 +6,15 @@ import numpy as np
 import torch
 
 
+def _set_seed(seed: int) -> None:
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+
 def _load_arrays(path: Path) -> Tuple[np.ndarray, np.ndarray]:
     with h5py.File(path, "r") as f:
         obs_key = "obs" if "obs" in f else "observations"
@@ -25,7 +34,14 @@ def _build_mlp(input_dim: int, output_dim: int) -> torch.nn.Module:
     )
 
 
-def train(dataset_path: str, model_out: str, epochs: int = 5, batch_size: int = 256) -> Path:
+def train(
+    dataset_path: str,
+    model_out: str,
+    epochs: int = 5,
+    batch_size: int = 256,
+    seed: int = 0,
+) -> Path:
+    _set_seed(seed)
     data_path = Path(dataset_path)
     model_path = Path(model_out)
     obs, actions = _load_arrays(data_path)

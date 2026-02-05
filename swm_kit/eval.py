@@ -9,6 +9,13 @@ from .train import _build_mlp
 from .world import make_world, set_policy
 
 
+def _set_seed(seed: int) -> None:
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+
+
 def _load_model(model_path: Path) -> torch.nn.Module:
     payload = torch.load(model_path, map_location="cpu")
     model = _build_mlp(payload["input_dim"], payload["output_dim"])
@@ -17,7 +24,8 @@ def _load_model(model_path: Path) -> torch.nn.Module:
     return model
 
 
-def evaluate(env: str, model_path: str, episodes: int = 10) -> float:
+def evaluate(env: str, model_path: str, episodes: int = 10, seed: int = 0) -> float:
+    _set_seed(seed)
     model = _load_model(Path(model_path))
     world = make_world(env=env, num_envs=1, image_shape=(64, 64, 3))
 

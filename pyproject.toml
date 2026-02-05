@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-swm = "swm.cli:app"
+swm = "swm_kit.cli:app"
 
 [build-system]
 requires = ["setuptools>=61.0"]

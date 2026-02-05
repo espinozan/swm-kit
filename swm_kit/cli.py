@@ -16,17 +16,23 @@ def record(env: str, out: str, episodes: int = 100, seed: int = 0) -> None:
     typer.echo(str(Path(out)))
 
 
-@app.command()
-def train_model(data: str = typer.Option(..., "--data"), out: str = typer.Option(..., "--out")) -> None:
+@app.command("train")
+def train_cmd(
+    data: str = typer.Option(..., "--data"),
+    out: str = typer.Option(..., "--out"),
+    epochs: int = 5,
+    batch_size: int = 256,
+    seed: int = 0,
+) -> None:
     """Train a tiny world model from an HDF5 dataset."""
-    train(dataset_path=data, model_out=out)
+    train(dataset_path=data, model_out=out, epochs=epochs, batch_size=batch_size, seed=seed)
     typer.echo(str(Path(out)))
 
 
-@app.command()
-def eval_model(env: str, model: str = typer.Option(..., "--model"), episodes: int = 10) -> None:
+@app.command("eval")
+def eval_cmd(env: str, model: str = typer.Option(..., "--model"), episodes: int = 10, seed: int = 0) -> None:
     """Evaluate a planner using a trained model."""
-    evaluate(env=env, model_path=model, episodes=episodes)
+    evaluate(env=env, model_path=model, episodes=episodes, seed=seed)
 
 
 if __name__ == "__main__":
