@@ -1,6 +1,6 @@
 # swm-kit
 
-Ultraminimal Unix-style helpers for `stable-worldmodel`.
+toolkit that automates Stable-WorldModel workflows: record data, train models, and evaluate planners via simple CLI for `World Models`. 
 
 ## Install
 
