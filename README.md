@@ -1,6 +1,6 @@
 # swm-kit
 
-toolkit that automates Stable-WorldModel workflows: record data, train models, and evaluate planners via simple CLI for `World Models`. 
+toolkit that automates workflows: record data, train models, and evaluate planners via simple CLI for Stable-WorldModel an eficient World model research made simple. From data collection to training and evaluation.
 
 ## Install
 
